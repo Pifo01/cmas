@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import Schedule
-from .forms import RegistroEntradaForm, MetricasForm
+from PortalCMAS.models import Clases
+from .forms import RegistroEntradaForm, MetricasForm, ClasesForm
 
 def Index(request):
     return render(request, 'index.html')
@@ -17,10 +18,53 @@ def Registro(request):
     return render(request, 'PortalRegistro.html')
 
 def Clases_cliente(request):
-    return render(request, 'clases_clientes.html')
+    clases=Clases.objects.all()
+    data={'clases':clases}
+    return render(request, 'clases_clientes.html',data)
 
 def Clases_profesor(request):
-    return render(request, 'clases_profesor.html')
+    clases=Clases.objects.all()
+    data={'clases':clases}
+    return render(request, 'clases_profesor.html',data)
+
+def Crear_Clase(request):
+    form=ClasesForm()
+    if request.method=='POST':
+        form=ClasesForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return Index(request)
+    data={'form':form,'titulo':'Agregar Clases'}
+    return render(request,'clases_save.html',data)
+
+def Ver_Clase(request,id):
+    clases=Clases.objects.get(id=id)
+    data={"clases":clases}
+    return render(request,'clases_ver.html',data)
+
+def Actualizar_Clase(request,id):
+    clases=Clases.objects.get(id=id)
+    form=ClasesForm(instance=clases)
+    if request.method=="POST":
+        form=ClasesForm(request.POST,instance=clases)
+        if form.is_valid():
+            form.save()
+        return Index(request)
+    data={'form':form,'titulo':'Actualizar Clase'}
+    return render(request,'clases_save.html',data)
+
+
+def Eliminar_Clase(request, id):
+    try:
+        clases = Clases.objects.get(id=id)
+    except Clases.DoesNotExist:
+        return redirect('../clases_profesor/')
+
+    if request.method == 'POST':
+        clases.delete()
+        return redirect('../clases_profesor/')
+    
+    return render(request, 'clases_eliminar.html', {'clases': clases})
 
 def Login_Admin(request):
     return render(request, 'PortalAdministrativo.html')

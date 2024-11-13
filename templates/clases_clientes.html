@@ -3,6 +3,7 @@
 
     <div class="container mt-5">
         <h2 class="text-center mb-4">Horarios Disponibles</h2>
+        {%if clases%}
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -13,26 +14,19 @@
                 </tr>
             </thead>
             <tbody>
+                {%for clas in clases%}
                 <tr>
-                    <td>08:00 - 09:00</td>
-                    <td>Yoga</td>
-                    <td>3 desocupadas, 2 ocupadas</td>
+                    <td>{{clas.Horario}}</td>
+                    <td>{{clas.Actividad}}</td>
+                    <td>{{clas.Maquinas_Desocupadas}}</td>
                     <td><button class="btn btn-primary">Inscribirse</button></td>
                 </tr>
-                <tr>
-                    <td>10:00 - 11:00</td>
-                    <td>Spinning</td>
-                    <td>2 desocupadas, 4 ocupadas</td>
-                    <td><button class="btn btn-primary">Inscribirse</button></td>
-                </tr>
-                <tr>
-                    <td>18:00 - 19:00</td>
-                    <td>Entrenamiento Funcional</td>
-                    <td>5 desocupadas, 0 ocupadas</td>
-                    <td><button class="btn btn-primary">Inscribirse</button></td>
-                </tr>
+                {%endfor%}
             </tbody>
         </table>
+        {%else%}
+            <div class="alert alert-info">No Hay Clases Programadas</div>
+        {%endif%}
     </div>
 
 {%include 'footer.html'%} 

@@ -31,3 +31,8 @@ class Metricas(models.Model):
     Peso_elevaciones_laterales=models.IntegerField(max_length=3)
     Peso_elevaciones_laterales_posterior=models.IntegerField(max_length=3)
     Peso_press_militar=models.IntegerField(max_length=3)
+
+class Clases(models.Model):
+    Horario = models.DateTimeField()
+    Actividad = models.CharField(max_length=50)
+    Maquinas_Diponibles = models.CharField(max_length=50)

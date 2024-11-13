@@ -1,5 +1,5 @@
 from django import forms
-from .models import RegistroEntrada, Metricas
+from .models import RegistroEntrada, Metricas, Clases
 
 class RegistroEntradaForm(forms.ModelForm):
     class Meta:
@@ -29,4 +29,13 @@ class MetricasForm(forms.ModelForm):
             'Peso_elevaciones_laterales',
             'Peso_elevaciones_laterales_posterior',
             'Peso_press_militar',
+        ]
+
+class ClasesForm(forms.ModelForm):
+    class Meta:
+        model=Clases
+        fields = [
+            'Horario', 
+            'Actividad', 
+            'Maquinas_Diponibles',
         ]
