@@ -1,0 +1,19 @@
+body {
+    background-color: #878787;
+    color: #333; 
+}
+
+.card {
+    background-color: #ffffff; 
+    border-radius: 10px;
+}
+
+.card-header {
+    background-color: #4a4a8c;
+    color: #ffffff;
+}
+
+.btn-primary {
+    background-color: #4a4a8c;
+    border: none;
+}

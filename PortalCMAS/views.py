@@ -22,6 +22,9 @@ def Clases_cliente(request):
 def Clases_profesor(request):
     return render(request, 'clases_profesor.html')
 
+def Login_Admin(request):
+    return render(request, 'PortalAdministrativo.html')
+
 def Metricas_clientes(request):
     form=MetricasForm()
     if request.method=='POST':
