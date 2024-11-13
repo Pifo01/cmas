@@ -33,6 +33,6 @@ class Metricas(models.Model):
     Peso_press_militar=models.IntegerField(max_length=3)
 
 class Clases(models.Model):
-    Horario = models.DateTimeField()
+    Horario = models.CharField(max_length=50)
     Actividad = models.CharField(max_length=50)
     Maquinas_Diponibles = models.CharField(max_length=50)

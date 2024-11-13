@@ -33,7 +33,7 @@ def Crear_Clase(request):
         form=ClasesForm(request.POST)
         if form.is_valid():
             form.save()
-        return Index(request)
+        return Clases_profesor(request)
     data={'form':form,'titulo':'Agregar Clases'}
     return render(request,'clases_save.html',data)
 
@@ -49,7 +49,7 @@ def Actualizar_Clase(request,id):
         form=ClasesForm(request.POST,instance=clases)
         if form.is_valid():
             form.save()
-        return Index(request)
+        return Clases_profesor(request)
     data={'form':form,'titulo':'Actualizar Clase'}
     return render(request,'clases_save.html',data)
 
@@ -58,11 +58,11 @@ def Eliminar_Clase(request, id):
     try:
         clases = Clases.objects.get(id=id)
     except Clases.DoesNotExist:
-        return redirect('../clases_profesor/')
+        return redirect('../Clases_profesor/')
 
     if request.method == 'POST':
         clases.delete()
-        return redirect('../clases_profesor/')
+        return redirect('../Clases_profesor/')
     
     return render(request, 'clases_eliminar.html', {'clases': clases})
 
