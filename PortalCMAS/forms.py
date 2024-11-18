@@ -39,3 +39,21 @@ class ClasesForm(forms.ModelForm):
             'Actividad', 
             'Maquinas_Diponibles',
         ]
+                
+class FormLogin(forms.Form):
+    username = forms.CharField(
+        label="Usuario",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Ingresa tu usuario',
+            'required' : 'true'
+        })
+    )
+    password= forms.CharField(
+        label="Contraseña",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder' : 'Ingresa tu contraseña',
+            'required' : 'true'   
+        })
+    )

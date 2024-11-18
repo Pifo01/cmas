@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
+from django.contrib.auth import *
+from django.contrib import messages
 from django.conf import settings
 from .models import Schedule
 from PortalCMAS.models import Clases
-from .forms import RegistroEntradaForm, MetricasForm, ClasesForm
+from .forms import RegistroEntradaForm, MetricasForm, ClasesForm, FormLogin
 
 def Index(request):
     return render(request, 'index.html')
@@ -12,7 +14,17 @@ def Membresias(request):
     return render(request, 'PortalMembresias.html')
 
 def Login(request):
-    return render(request, 'PortalLogin.html')
+    form = FormLogin(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('PortalUsuario')
+        else:
+            messages.error(request,"Usuario o Contraseña incorrectos.")
+    return render(request, 'PortalLogin.html', {'form': form})
 
 def Registro(request):
     return render(request, 'PortalRegistro.html')
