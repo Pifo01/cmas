@@ -8,36 +8,36 @@ class RegistroEntradaForm(forms.ModelForm):
 
 class MetricasForm(forms.ModelForm):
     class Meta:
-        model=Metricas
+        model = Metricas
         fields = [
-            'Altura', 
-            'Peso', 
-            'Peso_press_banca', 
-            'Peso_press_inclinado', 
-            'Peso_fondos', 
-            'Peso_jalon_al_pecho', 
-            'Peso_remo_polea', 
-            'Peso_remo_libre',
-            'Peso_dominada',
-            'Peso_sentadilla_libre',
-            'Peso_sentadilla_bulgara',
-            'Peso_maquina_cuadriceps',
-            'Peso_maquina_isquiotibiales',
-            'Peso_gemelos',
-            'Peso_biceps_mancuerna',
-            'Peso_triceps_mancuerna',
-            'Peso_elevaciones_laterales',
-            'Peso_elevaciones_laterales_posterior',
-            'Peso_press_militar',
+            'altura', 
+            'peso', 
+            'peso_press_banca', 
+            'peso_press_inclinado', 
+            'peso_fondos', 
+            'peso_jalon_al_pecho', 
+            'peso_remo_polea', 
+            'peso_remo_libre',
+            'peso_dominada',
+            'peso_sentadilla_libre',
+            'peso_sentadilla_bulgara',
+            'peso_maquina_cuadriceps',
+            'peso_maquina_isquiotibiales',
+            'peso_gemelos',
+            'peso_biceps_mancuerna',
+            'peso_triceps_mancuerna',
+            'peso_elevaciones_laterales',
+            'peso_elevaciones_laterales_posterior',
+            'peso_press_militar',
         ]
 
 class ClasesForm(forms.ModelForm):
     class Meta:
-        model=Clases
+        model = Clases
         fields = [
-            'Horario', 
-            'Actividad', 
-            'Maquinas_Diponibles',
+            'horario', 
+            'actividad', 
+            'maquinas_disponibles',
         ]
                 
 class FormLogin(forms.Form):
