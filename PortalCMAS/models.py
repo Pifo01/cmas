@@ -34,6 +34,12 @@ class Metricas(models.Model):
     peso_press_militar = models.IntegerField(null=True)
 
 class Clases(models.Model):
-    horario = models.CharField(max_length=50)
-    actividad = models.CharField(max_length=50)
-    maquinas_disponibles = models.CharField(max_length=50)
+    Horario = models.CharField(max_length=50)
+    Actividad = models.CharField(max_length=50)
+    Maquinas_Diponibles = models.CharField(max_length=50)
+
+class Membresias(models.Model):
+    Nombre = models.CharField(max_length=30)
+    Precio = models.IntegerField(default=0)
+    Horario1 = models.CharField(max_length=50)
+    Horario2 = models.CharField(max_length=50)

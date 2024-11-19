@@ -1,5 +1,5 @@
 from django import forms
-from .models import RegistroEntrada, Metricas, Clases
+from .models import RegistroEntrada, Metricas, Clases, Membresias
 
 class RegistroEntradaForm(forms.ModelForm):
     class Meta:
@@ -35,9 +35,9 @@ class ClasesForm(forms.ModelForm):
     class Meta:
         model = Clases
         fields = [
-            'horario', 
-            'actividad', 
-            'maquinas_disponibles',
+            'Horario', 
+            'Actividad', 
+            'Maquinas_Diponibles',
         ]
                 
 class FormLogin(forms.Form):
@@ -57,3 +57,13 @@ class FormLogin(forms.Form):
             'required' : 'true'   
         })
     )
+
+class MembresiasForm(forms.ModelForm):
+    class Meta:
+        model=Membresias
+        fields= [
+            'Nombre',
+            'Precio',
+            'Horario1',
+            'Horario2',
+        ]

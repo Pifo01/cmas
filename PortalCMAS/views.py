@@ -4,14 +4,54 @@ from django.contrib.auth import *
 from django.contrib import messages
 from django.conf import settings
 from .models import Schedule
-from PortalCMAS.models import Clases
-from .forms import RegistroEntradaForm, MetricasForm, ClasesForm, FormLogin
+from PortalCMAS.models import Clases, Membresias
+from .forms import RegistroEntradaForm, MetricasForm, ClasesForm, FormLogin, MembresiasForm
 
 def Index(request):
     return render(request, 'index.html')
 
-def Membresias(request):
-    return render(request, 'PortalMembresias.html')
+def MembresiasUsuarios(request):
+    membresias=Membresias.objects.all()
+    data={'membresias':membresias}
+    return render(request, 'PortalMembresias.html',data)
+
+def MembresiasAdmin(request):
+    membresias=Membresias.objects.all()
+    data={'membresias':membresias}
+    return render(request, 'PortalMembresiasAdmin.html',data)
+
+def CrearMembresias(request):
+    form=MembresiasForm()
+    if request.method=='POST':
+        form=MembresiasForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return MembresiasAdmin(request)
+    data={'form':form,'titulo':'Agregar Membresia'}
+    return render(request,'membresias_crear.html',data)
+
+def Eliminar_Membresia(request, id):
+    try:
+        membresias = Membresias.objects.get(id=id)
+    except Membresias.DoesNotExist:
+        return redirect('../MembresiasAdmin/')
+
+    if request.method == 'POST':
+        membresias.delete()
+        return redirect('../MembresiasAdmin/')
+    
+    return render(request, 'membresias_eliminar.html', {'membresias': membresias})
+
+def Actualizar_Membresia(request,id):
+    membresias=Membresias.objects.get(id=id)
+    form=MembresiasForm(instance=membresias)
+    if request.method=="POST":
+        form=MembresiasForm(request.POST,instance=membresias)
+        if form.is_valid():
+            form.save()
+        return MembresiasAdmin(request)
+    data={'form':form,'titulo':'Actualizar Membresia'}
+    return render(request,'membresias_crear.html',data)
 
 def Login(request):
     form = FormLogin(request.POST or None)
