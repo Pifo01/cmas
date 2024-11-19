@@ -22,5 +22,4 @@ urlpatterns = [
     path('crear_membresia/', CrearMembresias),
     path('eliminar_membresia/<int:id>', Eliminar_Membresia),
     path('actualizar_membresia/<int:id>',Actualizar_Membresia),
-
 ]

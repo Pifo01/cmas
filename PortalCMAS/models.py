@@ -4,13 +4,22 @@ class Schedule(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateTimeField()
     
-class RegistroEntrada(models.Model):
+class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
-    rut = models.CharField(max_length=12)
-    hora_entrada = models.DateTimeField()
+    apellido = models.CharField(max_length=100)
+    rut = models.CharField(max_length=12, unique=True)
+    plan = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"{self.nombre} - {self.rut}"
+        return f"{self.nombre} {self.apellido} ({self.rut})"
+
+
+class RegistroEntrada(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    hora_entrada = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Entrada: {self.cliente.nombre} ({self.hora_entrada})"
 
 class Metricas(models.Model):
     altura = models.IntegerField(null=True)

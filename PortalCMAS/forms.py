@@ -1,10 +1,12 @@
 from django import forms
 from .models import RegistroEntrada, Metricas, Clases, Membresias
 
-class RegistroEntradaForm(forms.ModelForm):
-    class Meta:
-        model = RegistroEntrada
-        fields = ['nombre', 'rut', 'hora_entrada']
+class RegistroEntradaForm(forms.Form):
+    rut = forms.CharField(
+        max_length=12,
+        label="RUT",
+        widget=forms.TextInput(attrs={'placeholder': 'Ej: 12345678-9'})
+    )
 
 class MetricasForm(forms.ModelForm):
     class Meta:

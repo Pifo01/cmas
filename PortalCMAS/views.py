@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.contrib.auth import *
 from django.contrib import messages
 from django.conf import settings
-from .models import Schedule
+from .models import Schedule, Cliente, RegistroEntrada
 from PortalCMAS.models import Clases, Membresias
 from .forms import RegistroEntradaForm, MetricasForm, ClasesForm, FormLogin, MembresiasForm
 
@@ -155,13 +155,24 @@ def Inscripcion(request, schedule_id):
     schedule = get_object_or_404(Schedule, id=schedule_id)
     return redirect('success_page') 
 
-def RegistroEntrada(request):
+def RegistroEntrada(request): 
+    cliente = None
+    error = None
+
     if request.method == 'POST':
         form = RegistroEntradaForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('success') 
+            rut = form.cleaned_data['rut']
+            try:
+                cliente = Cliente.objects.get(rut=rut)
+                RegistroEntrada.objects.create(cliente=cliente, hora_entrada=now())
+                messages.success(request, f"Acceso registrado para {cliente.nombre} {cliente.apellido}.")
+                return redirect('registro_entrada')
+            except Cliente.DoesNotExist:
+                error = "El RUT ingresado no está registrado."
+        else:
+            error = "El formulario contiene datos inválidos."
     else:
         form = RegistroEntradaForm()
-    
-    return render(request, 'registro_entrada.html', {'form': form})
+
+    return render(request, 'registro_entrada.html', {'form': form, 'cliente': cliente, 'error': error})
