@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.conf import settings
 from .models import Schedule, Cliente, RegistroEntrada
 from PortalCMAS.models import Clases, Membresias
-from .forms import RegistroEntradaForm, MetricasForm, ClasesForm, FormLogin, MembresiasForm
+from .forms import RegistroEntradaForm, MetricasForm, ClasesForm, FormLogin, MembresiasForm, FormRegistro
 
 def Index(request):
     return render(request, 'index.html')
@@ -67,7 +67,20 @@ def Login(request):
     return render(request, 'PortalLogin.html', {'form': form})
 
 def Registro(request):
-    return render(request, 'PortalRegistro.html')
+    if request.method == "POST":
+        form = FormRegistro(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data["password"])
+            user.save()
+            form.save()
+            messages.success(request,"Registro Exitoso. Puedes logear ahora.")
+            return redirect('PortalLogin')
+        else:
+            messages.error(request, "Corrige los campos señalados por favor")
+    else:
+        form = FormRegistro()
+    return render(request, 'PortalRegistro.html', {"form": form})
 
 def Clases_cliente(request):
     clases=Clases.objects.all()

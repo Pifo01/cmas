@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 class Schedule(models.Model):
@@ -12,7 +13,16 @@ class Cliente(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellido} ({self.rut})"
+    
+class Usuarios(AbstractUser):
+    telefono = models.CharField(max_length=15, blank=True, null=True, verbose_name="Teléfono")
 
+    class Meta:
+        verbose_name = "Usuario"
+        verbose_name_plural = "Usuarios"
+
+    def __str__(self):
+        return self.username
 
 class RegistroEntrada(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)

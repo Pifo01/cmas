@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     'PortalCMAS'
 ]
 
+AUTH_USER_MODEL = 'PortalCMAS.Usuarios'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -59,6 +61,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gimnasio',
         'USER': 'root',
+        'password': '',
+        'port' : '3306'
     }
 }
 
