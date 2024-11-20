@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth import *
 from django.contrib import messages
 from django.conf import settings
@@ -56,31 +57,42 @@ def Actualizar_Membresia(request,id):
 def Login(request):
     form = FormLogin(request.POST or None)
     if request.method == "POST" and form.is_valid():
-        username = form.cleaned_data['username']
+        nombre = form.cleaned_data['nombre']
         password = form.cleaned_data['password']
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, nombre=nombre, password=password)
         if user is not None:
             login(request, user)
-            return redirect('PortalUsuario')
+            return redirect('../index')
         else:
-            messages.error(request,"Usuario o Contraseña incorrectos.")
+            messages.error(request,"Nombre o Contraseña incorrectos.")
     return render(request, 'PortalLogin.html', {'form': form})
 
 def Registro(request):
     if request.method == "POST":
         form = FormRegistro(request.POST)
         if form.is_valid():
+            # Crear el usuario sin guardarlo aún
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data["password"])
+
+            # Establecer la contraseña en formato hash
+            password = form.cleaned_data.get("password")
+            if password:
+                # Encriptar la contraseña
+                user.password = make_password(password)
+            # Guardar el usuario en la base de datos
             user.save()
-            form.save()
-            messages.success(request,"Registro Exitoso. Puedes logear ahora.")
-            return redirect('PortalLogin')
+
+            # Enviar mensaje de éxito
+            messages.success(request, "Registro Exitoso. Puedes logear ahora.")
+            return redirect('../PortalLogin')
         else:
+            # Mostrar errores si el formulario no es válido
             messages.error(request, "Corrige los campos señalados por favor")
     else:
         form = FormRegistro()
+
     return render(request, 'PortalRegistro.html', {"form": form})
+
 
 def Clases_cliente(request):
     clases=Clases.objects.all()

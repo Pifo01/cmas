@@ -17,7 +17,6 @@ INSTALLED_APPS = [
     'PortalCMAS'
 ]
 
-AUTH_USER_MODEL = 'PortalCMAS.Usuarios'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
